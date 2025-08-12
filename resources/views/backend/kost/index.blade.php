@@ -40,16 +40,44 @@
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $item->nama_kost }}</td>
                                         <td>{{ $item->kota->nama_kota }}</td>
-                                        <td>Loading...</td>
-                                        <td>Loading...</td>
-                                        <td>Loading...</td>
+                                        <td>
+                                            @if ($item->gambar_kost1)
+                                                <img src="{{ asset('storage/kost/' . $item->gambar_kost1) }}" alt="Gambar Kost 1" width="100">
+                                            @else
+                                                <span class="text-muted">-</span>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if ($item->gambar_kost2)
+                                                <img src="{{ asset('storage/kost/' . $item->gambar_kost2) }}" alt="Gambar Kost 2" width="100">
+                                            @else
+                                                <span class="text-muted">-</span>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if ($item->gambar_kost3)
+                                                <img src="{{ asset('storage/kost/' . $item->gambar_kost3) }}" alt="Gambar Kost 3" width="100">
+                                            @else
+                                                <span class="text-muted">-</span>
+                                            @endif
+                                        </td>
                                         <td>{{ $item->alamat }}</td>
-                                        <td>Loading...</td>
-                                        <td>Loading...</td>
+                                        <td>
+                                            @if ($item->map)
+                                                <a href="{{ $item->map }}" target="_blank">Lihat Map</a>
+                                            @else
+                                                <span class="text-muted">-</span>
+                                            @endif
+                                        </td>
+                                        <td>Rp {{ number_format($item->harga, 0, ',', '.') }}</td>
                                         <td>{{ $item->jumlah_kamar }}</td>
                                         <td>
-                                            <a href="" class="btn btn-sm btn-primary"><i class="bi bi-pencil"></i> Edit</a>
-                                            <form action="" style="display: inline">
+                                            <a href="{{ route('admin.kost.edit', $item->id) }}" class="btn btn-sm btn-primary">
+                                                <i class="bi bi-pencil"></i> Edit
+                                            </a>
+                                            <form action="{{ route('admin.kost.delete', $item->id) }}" method="POST" style="display: inline">
+                                                @csrf
+                                                @method('DELETE')
                                                 <button class="btn btn-sm btn-danger"
                                                     onclick="return confirm('Yakin ingin hapus data ini ?')">
                                                     <i class="bi bi-trash"></i> Delete

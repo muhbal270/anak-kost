@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Frontend;
 
-use App\Http\Controllers\Controller;
+use App\Models\Kost;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class KostController extends Controller
 {
@@ -17,8 +18,9 @@ class KostController extends Controller
         return view('frontend.kost.area');
     }
 
-    public function kostDetail()
+    public function kostDetail($slug)
     {
-        return view('frontend.kost.detail');
+        $kost = Kost::with('kota')->where('slug', $slug)->firstOrFail();
+        return view('frontend.kost.detail', compact('kost'));
     }
 }

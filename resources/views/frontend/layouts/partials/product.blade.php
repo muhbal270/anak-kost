@@ -1,32 +1,21 @@
 <div class="row">
-    <div class="col-lg-4">
-        <div class="card border-0 mt-3">
-            <img src="./assets/kost1.png" class="card-img-top rounded-3" alt="Kost 1">
-            <div class="card-body">
-                <h5 class="card-title">Lefty Green Kost</h5>
-                <p class="card-text text-muted">Kota Yogyakarta</p>
-                <h5 class="card-price">Rp 1.500.000<small>/bulan</small></h5>
-            </div>
+    @forelse ($kosts as $item)
+        <div class="col-lg-4">
+            <a href="{{ route('kost.detail', $item->slug) }}" title="{{ $item->slug }}" class="text-decoration-none">
+                <div class="card border-0 mt-3">
+                    <img src="{{ asset('storage/kost/' . $item->gambar_kost1) }}" class="card-img-top rounded-3"
+                        alt="{{ $item->nama_kost }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ $item->nama_kost }}</h5>
+                        <p class="card-text text-muted">Kota {{ $item->kota->nama_kota }}</p>
+                        <h5 class="card-price">Rp {{ number_format($item->harga, 0, ',', '.') }}<small>/bulan</small></h5>
+                    </div>
+                </div>
+            </a>
         </div>
-    </div>
-    <div class="col-lg-4">
-        <div class="card border-0 mt-3">
-            <img src="./assets/kost2.png" class="card-img-top rounded-3" alt="Kost 1">
-            <div class="card-body">
-                <h5 class="card-title">Centering Kost</h5>
-                <p class="card-text text-muted">Kota Palembang</p>
-                <h5 class="card-price">Rp 1.500.000<small>/bulan</small></h5>
-            </div>
+    @empty
+        <div class="col-12 text-center">
+            Belum ada kost yang tersedia.
         </div>
-    </div>
-    <div class="col-lg-4">
-        <div class="card border-0 mt-3">
-            <img src="./assets/kost3.png" class="card-img-top rounded-3" alt="Kost 1">
-            <div class="card-body">
-                <h5 class="card-title">Rightly Cozy Kost</h5>
-                <p class="card-text text-muted">Kota Jakarta</p>
-                <h5 class="card-price">Rp 1.500.000<small>/bulan</small></h5>
-            </div>
-        </div>
-    </div>
+    @endforelse
 </div>

@@ -5,7 +5,7 @@ use App\Http\Controllers\Frontend\KostController;
 use App\Http\Controllers\Frontend\OrderController;
 
 Route::middleware('auth')->group(function () {
-    Route::get('/kost/detail', [KostController::class, 'kostDetail'])
+    Route::get('/kost/detail/{slug}', [KostController::class, 'kostDetail'])
         ->name('kost.detail');
 
     Route::get('kost/pesanan', [OrderController::class, 'index'])

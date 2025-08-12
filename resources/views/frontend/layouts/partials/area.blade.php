@@ -7,7 +7,7 @@
                         class="rounded-3">
                     <div class="text">
                         <h5>{{ $item->nama_kota }}</h5>
-                        <p>10 Kost Tersedia</p>
+                        <p>{{ $item->kosts_count }} Kost Tersedia</p>
                     </div>
                 </div>
             </a>

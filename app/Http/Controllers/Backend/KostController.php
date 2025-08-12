@@ -25,6 +25,13 @@ class KostController extends Controller
         return view('backend.kost.create', compact('kotas'));
     }
 
+    public function edit(Kost $kost)
+    {
+        $kotas = Kota::latest()->get();
+
+        return view('backend.kost.edit', compact('kost', 'kotas'));
+    }
+
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -83,4 +90,73 @@ class KostController extends Controller
             return redirect()->back();
         }
     }
+
+    public function update(Request $request, Kost $kost)
+    {
+        $validated = $request->validate([
+            'kota_id' => 'required|exists:kotas,id',
+            'nama_kost' => 'required|string|max:255',
+            'gambar_kost1' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'gambar_kost2' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'gambar_kost3' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'alamat' => 'required|string|max:255',
+            'map' => 'required|string',
+            'harga' => 'required|numeric|min:0',
+            'jumlah_kamar' => 'required|integer|min:1',
+            'deskripsi' => 'nullable|string',
+        ]);
+
+        // buat slug dari nama kost
+        $slug = Str::slug($validated['nama_kost']);
+        if (Kost::where('slug', $slug)->where('id', '<>', $kost->id)->exists()) {
+            $slug .= '-' . time(); // tambahkan timestamp jika slug sudah ada
+        }
+
+        $validated['slug'] = $slug;
+
+        // proses upload gambar
+        foreach (['gambar_kost1', 'gambar_kost2', 'gambar_kost3'] as $imageField) {
+            if ($request->hasFile($imageField)) {
+                $image = $request->file($imageField);
+                $imageName = time() . '_' . $imageField . '.' . $image->getClientOriginalExtension();
+                $image->move(public_path('storage/kost'), $imageName);
+                $validated[$imageField] = $imageName;
+            } else {
+                // jika tidak ada gambar baru, tetap gunakan gambar lama
+                $validated[$imageField] = $kost->$imageField;
+            }
+        }
+
+        // Update data kost di database
+        $kost->update($validated);
+
+        if ($request) {
+            flash()->success('Berhasil Memperbarui Kost: ' . $kost->nama_kost);
+            return redirect()->route('admin.kost.index');
+        } else {
+            flash()->error('Gagal Memperbarui Kost !!!');
+            return redirect()->back();
+        }
+    }
+
+    public function destroy(Kost $kost)
+    {
+        // Hapus gambar dari storage jika ada
+        foreach (['gambar_kost1', 'gambar_kost2', 'gambar_kost3'] as $imageField) {
+            if ($kost->$imageField && file_exists(public_path('storage/kost/' . $kost->$imageField))) {
+                unlink(public_path('storage/kost/' . $kost->$imageField));
+            }
+        }
+
+        // Hapus data kost dari database
+        $deleted = $kost->delete();
+
+        if ($deleted) {
+            flash()->success('Berhasil Menghapus Kost: ' . $kost->nama_kost);
+            return redirect()->route('admin.kost.index');
+        } else {
+            flash()->error('Gagal Menghapus Kost !!!');
+            return redirect()->back();
+        }
+    }   
 }

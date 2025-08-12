@@ -59,7 +59,16 @@ Route::middleware(['admin'])->group(function () {
     Route::get('/admin/kost/create', [KostController::class, 'create'])
         ->name('admin.kost.create');
 
+    Route::get('/admin/kost/edit/{kost}', [KostController::class, 'edit'])
+        ->name('admin.kost.edit');
+
     Route::post('/admin/kost/store', [KostController::class, 'store'])
         ->name('admin.kost.store');
+
+    Route::put('/admin/kost/update/{kost}', [KostController::class, 'update'])
+        ->name('admin.kost.update');
+
+    Route::delete('/admin/kost/delete/{kost}', [KostController::class, 'destroy'])
+        ->name('admin.kost.delete');
 });
 

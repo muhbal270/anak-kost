@@ -53,9 +53,7 @@
     <section class="kost mt-5">
         <div class="container">
             <h5>Kostan yang mungkin cocok denganmu</h5>
-            <a href="{{ route('kost.detail') }}" class="text-decoration-none">
                 @include('frontend.layouts.partials.product')
-            </a>
         </div>
     </section>
     <!-- kost -->
