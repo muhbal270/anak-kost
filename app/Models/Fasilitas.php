@@ -10,4 +10,9 @@ class Fasilitas extends Model
         'nama_fasilitas',
         'icon_fasilitas',
     ];
+
+    public function kosts()
+    {
+        return $this->belongsToMany(Kost::class, 'kost_fasilitas', 'fasilitas_id', 'kost_id');
+    }
 }

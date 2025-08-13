@@ -47,14 +47,15 @@
                     <hr>
 
                     <h6>Fasilitas Kost</h6>
-                    <table class="table table-borderless">
-                        <tr>
-                            <td><i class="bi bi-wifi"></i> Free Internet</td>
-                            <td><i class="bi bi-shop-window"></i> Tempat Parkir</td>
-                            <td><i class="bi bi-usb-mini"></i> Dapur</td>
-                            <td><i class="bi bi-badge-wc"></i> Kamar mandi dalam</td>
-                        </tr>
-                    </table>
+                    <div class="d-flex flex-wrap gap-5">
+                        @forelse ($kost->fasilitas as $item)
+                            <span class="d-flex align-items-center gap-1">
+                                <i class="{{ $item->icon_fasilitas }}"></i> {{ $item->nama_fasilitas }}
+                            </span>
+                        @empty
+                            <span class="text-muted">Tidak ada fasilitas terdaftar</span>
+                        @endforelse
+                    </div>
 
                     <hr>
 

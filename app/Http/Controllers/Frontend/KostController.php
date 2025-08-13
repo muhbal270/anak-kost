@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Models\Kost;
+use App\Models\Kota;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -10,7 +11,9 @@ class KostController extends Controller
 {
     public function index()
     {
-        return view('frontend.kost.index');
+        $kotas = Kota::all();
+        
+        return view('frontend.kost.index', compact('kotas'));
     }
 
     public function kostArea()
@@ -20,7 +23,7 @@ class KostController extends Controller
 
     public function kostDetail($slug)
     {
-        $kost = Kost::with('kota')->where('slug', $slug)->firstOrFail();
+        $kost = Kost::with('kota', 'fasilitas')->where('slug', $slug)->firstOrFail();
         return view('frontend.kost.detail', compact('kost'));
     }
 }

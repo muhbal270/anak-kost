@@ -62,6 +62,9 @@
                     <li class="submenu-item  ">
                         <a href="{{ route('admin.kost.index') }}" class="submenu-link">Kost</a>
                     </li>
+                    <li class="submenu-item  ">
+                        <a href="{{ route('admin.kost_fasilitas.index') }}" class="submenu-link">Kost Fasilitas</a>
+                    </li>
                 </ul>
             </li>
             {{-- <li class="sidebar-item has-sub">

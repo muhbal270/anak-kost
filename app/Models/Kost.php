@@ -25,4 +25,9 @@ class Kost extends Model
     {
         return $this->belongsTo(Kota::class);
     }
+
+    public function fasilitas()
+    {
+        return $this->belongsToMany(Fasilitas::class, 'kost_fasilitas', 'kost_id', 'fasilitas_id');
+    }
 }

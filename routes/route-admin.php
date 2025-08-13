@@ -5,6 +5,7 @@ use App\Http\Controllers\Backend\KostController;
 use App\Http\Controllers\Backend\KotaController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\FasilitasController;
+use App\Http\Controllers\Backend\KostFasilitasController;
 
 Route::middleware(['admin'])->group(function () {
 
@@ -52,23 +53,42 @@ Route::middleware(['admin'])->group(function () {
     
     
     //--------------------------route fasilitas--------------------------//
-
+    
     Route::get('/admin/kost', [KostController::class, 'index'])
-        ->name('admin.kost.index');
-
+    ->name('admin.kost.index');
+    
     Route::get('/admin/kost/create', [KostController::class, 'create'])
-        ->name('admin.kost.create');
-
+    ->name('admin.kost.create');
+    
     Route::get('/admin/kost/edit/{kost}', [KostController::class, 'edit'])
-        ->name('admin.kost.edit');
-
+    ->name('admin.kost.edit');
+    
     Route::post('/admin/kost/store', [KostController::class, 'store'])
-        ->name('admin.kost.store');
-
+    ->name('admin.kost.store');
+    
     Route::put('/admin/kost/update/{kost}', [KostController::class, 'update'])
-        ->name('admin.kost.update');
-
+    ->name('admin.kost.update');
+    
     Route::delete('/admin/kost/delete/{kost}', [KostController::class, 'destroy'])
-        ->name('admin.kost.delete');
+    ->name('admin.kost.delete');
+    //--------------------------route fasilitas--------------------------//
+
+    Route::get('/admin/kost-fasilitas', [KostFasilitasController::class, 'index'])
+        ->name('admin.kost_fasilitas.index');
+
+    Route::get('/admin/kost-fasilitas/create', [KostFasilitasController::class, 'create'])
+        ->name('admin.kost_fasilitas.create');
+
+    Route::get('/admin/kost-fasilitas/edit/{id}', [KostFasilitasController::class, 'edit'])
+        ->name('admin.kost_fasilitas.edit');
+
+    Route::post('/admin/kost-fasilitas/store', [KostFasilitasController::class, 'store'])
+        ->name('admin.kost_fasilitas.store');
+
+    Route::put('/admin/kost-fasilitas/update/{id}', [KostFasilitasController::class, 'update'])
+        ->name('admin.kost_fasilitas.update');
+
+    Route::delete('/admin/kost-fasilitas/delete/{id}', [KostFasilitasController::class, 'destroy'])
+        ->name('admin.kost_fasilitas.delete');
 });
 

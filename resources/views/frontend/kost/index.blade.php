@@ -24,7 +24,7 @@
     <section class="kota mt-5">
         <div class="container">
             <h5>Kota Tersedia</h5>
-            <a href="./kota.html" class="text-decoration-none">
+            <a href="{{ route('kost.index') }}" class="text-decoration-none">
                 @include ('frontend.layouts.partials.area')
             </a>
         </div>
